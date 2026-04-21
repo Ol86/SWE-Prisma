@@ -1,0 +1,4 @@
+id;username;first_name;last_name;gender;date_of_birth;member_since;is_student;email_address;interests;version;generated;updated
+1;admin;Admin;Admin;MALE;1970-01-01;2023-01-01;false;admin@example.com;null;0;2026-01-01 00:00:00;2026-01-01 00:00:00
+2;ole;Ole;Menke;MALE;1970-01-01;2023-01-01;true;ole.menke@example.com;null;0;2026-01-01 00:00:00;2026-01-01 00:00:00
+3;paul;Paul;Braeuninger;MALE;1970-01-01;2023-01-01;true;paul.braeuninger@example.com;null;0;2026-01-01 00:00:00;2026-01-01 00:00:00

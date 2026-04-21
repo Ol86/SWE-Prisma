@@ -1,0 +1,5 @@
+id;name;isbn;author;still_borrowed;genre;member_id
+1;Book 1;1234567890;Author;false;FANTASY;1
+2;Book 2;1234567891;Author;false;FANTASY;2
+3;Book 3;1234567892;Author;false;FANTASY;3
+4;Book 4;1234567893;Author;false;FANTASY;1

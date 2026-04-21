@@ -1,0 +1,54 @@
+@startuml ER Diagram
+
+' ER diagram with only 1:1 and 1:N relationships.
+hide circle
+skinparam linetype ortho
+
+' Entities
+entity "Member" as Member {
+    * id: integer <<generated>>
+    --
+      username: text <<unique>>
+      last_name: text
+      first_name: text
+    * **gender**: Gender
+      date_of_birth: date
+    * member_since: date
+    * is_student: bool
+      email_address: text <<unique>>
+    * interests: list[Genre]
+    * interests_json: list[text]
+      **address**: Address
+      books: list[Book]
+    * version: integer
+    * generated: timestamp
+    * updated: timestamp
+}
+
+entity "Address" as Address {
+    * id: integer <<generated>>
+    --
+      postal_code: text
+      place: text
+    * **member_id**: integer <<FK>>
+}
+
+entity "Book" as Book {
+    * id: integer <<generated>>
+    --
+    name: text
+    isbn: text <<unique>>
+    * author: text
+    * still_borrowed: boolean
+    * genre: Genre
+    * **member_id**: integer <<FK>>
+}
+
+' Relationships
+Member ||--|| Address : "has"
+Member ||--o{ Book : "rents"
+
+
+footer Ole Menke | Paul Bräuninger
+
+@enduml
