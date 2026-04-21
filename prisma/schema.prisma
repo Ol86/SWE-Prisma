@@ -1,0 +1,24 @@
+generator client {
+  provider            = "prisma-client"
+  output              = "../src/generated/prisma"
+  previewFeatures     = ["nativeDistinct", "relationJoins"]
+  engineType          = "client"
+  // importFileExtension = "ts"
+}
+
+datasource db {
+  provider = "postgresql"
+  schemas = "library"
+}
+
+model Member {
+
+}
+
+model Addrss {
+
+}
+
+model Book {
+
+}
