@@ -1,0 +1,83 @@
+generator client {
+  provider        = "prisma-client"
+  output          = "../src/generated/prisma"
+  previewFeatures = ["nativeDistinct", "relationJoins"]
+  engineType      = "client"
+}
+
+datasource db {
+  provider = "postgresql"
+  schemas  = ["library"]
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model Address {
+  id          Int     @id @default(autoincrement())
+  postalCode  String  @map("postal_code")
+  place       String
+  memberId    Int?    @map("member_id")
+  member      Member? @relation(fields: [memberId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@index([memberId], map: "address_library_id_idx")
+  @@index([postalCode])
+  @@map("address")
+  @@schema("library")
+}
+
+model Book {
+  id             Int     @id @default(autoincrement())
+  name           String
+  isbn           String  @unique
+  author         String?
+  stillBorrowed  Boolean @default(false) @map("still_borrowed")
+  genre          Genre?
+  memberId       Int?    @map("member_id")
+  member         Member? @relation(fields: [memberId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@index([memberId])
+  @@map("book")
+  @@schema("library")
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model Member {
+  id            Int       @id @default(autoincrement())
+  username      String    @unique
+  lastName      String    @map("last_name")
+  firstName     String    @map("first_name")
+  gender        Gender?
+  dateOfBirth   DateTime  @db.Date @map("date_of_birth")
+  memberSince   DateTime? @db.Date @map("member_since")
+  isStudent     Boolean   @default(false) @map("is_student")
+  emailAddress  String    @unique @map("email_address")
+  interests     Json?
+  version       Int       @default(0)
+  generated     DateTime  @default(now()) @db.Timestamp(6)
+  updated       DateTime  @default(now()) @db.Timestamp(6) @updatedAt
+  address       Address[]
+  books         Book[]
+
+  @@index([lastName])
+  @@map("member")
+  @@schema("library")
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  DIVERS
+
+  @@map("gender")
+  @@schema("library")
+}
+
+enum Genre {
+  FANTASY
+  SCIENCE_FICTION
+  CRIME_NOVEL
+  THRILLER
+  NON_FICTION
+
+  @@map("genre")
+  @@schema("library")
+}
